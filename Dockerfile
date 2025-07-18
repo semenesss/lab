@@ -1,19 +1,13 @@
-# Use the latest Ubuntu image
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
-# Update and install required packages
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip
+RUN apt-get update && \
+    apt-get install -y shellinabox && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Set the working directory
-WORKDIR /app
+RUN echo 'root:root' | chpasswd
 
-# Install JupyterLab
-RUN pip3 install jupyterlab --break-system-packages
+EXPOSE 22
 
-# Expose port 8080
-EXPOSE 8080
-
-# Start JupyterLab on port 8080 without authentication
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8080", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
+# 启动 Shellinabox
+CMD ["/usr/bin/shellinaboxd", "-t", "-s", "/:LOGIN"]
