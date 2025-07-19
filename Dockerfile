@@ -14,10 +14,10 @@ RUN apt-get -y update && \
     rm -rf /var/lib/apt/lists*
 
 
-COPY /run_gotty.sh /run_gotty.sh
+COPY /run.sh /run.sh
 
-RUN chmod 744 /run_gotty.sh
+RUN chmod 744 /run.sh
 
 EXPOSE 8080
 
-CMD ["/bin/bash","/run_gotty.sh"]
+CMD ["/bin/bash","/run.sh"]
